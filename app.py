@@ -115,9 +115,12 @@ def index():
 @login_required
 def home():
 	items = db.session.query(Item).filter_by(listed=True).all()
+	all_users = db.session.query(User).all()
 	return render_template( 'home.html',
 							items=items,
-							title="Listings")
+							title="Listings",
+							all_users=all_users,
+							current_user=current_user)
 
 @app.route('/buy/<itemid>/<buyerid>')
 @login_required
@@ -135,9 +138,10 @@ def buy(itemid, buyerid):
 					 seller.name, seller.accountNumber, item.price)
 	if res == "200" or res == 200:
 		print "Succesfully transfered money"
+		flash("Item succesfully purchased")
   
 	db.session.commit()
-	return render_template('home.html')
+	return redirect("/home")
 
 @app.route('/add', methods=["GET", "POST"])
 @login_required
@@ -161,6 +165,27 @@ def add(name, price):
 	db.session.commit()
 	flash('Item ' + name + ' succesfully added')
 	return render_template('home.html')
+
+@app.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+	form = ProfileForm()
+	if request.method == 'POST':
+		if form.validate_on_submit:
+			current_user.name = form.name.data
+			current_user.email = form.email.data
+			current_user.accountNumber = form.accountNumber.data
+			if form.password.data:
+				current_user.password = form.password.data
+			db.session.commit()
+			flash("Succesfully updated")
+			return redirect("/profile")
+		else:
+			flash("An error occurred with your submission")
+			return redirect("/profile")
+	return render_template('profile.html',
+					current_user=current_user,
+					form=form)
 
 @app.route("/logout")
 def logout():

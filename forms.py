@@ -14,3 +14,9 @@ class LoginForm(Form):
 class AddItemForm(Form):
   name = StringField('name', validators=[DataRequired()])
   price = IntegerField('price', validators=[DataRequired()])
+
+class ProfileForm(Form):
+  name = StringField('name', validators=[DataRequired()])
+  email = StringField('email', validators=[DataRequired()])
+  password = PasswordField('password')
+  accountNumber = StringField('accountNumber', validators=[DataRequired()])

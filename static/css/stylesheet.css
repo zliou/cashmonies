@@ -5,7 +5,15 @@
 html, 
 body {
   font-family: "Gotham Rounded", sans-serif;
-  background: url(../img/low_poly.jpg) no-repeat center center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/background.jpeg) no-repeat center center;
+  background-size: cover;
+  min-height: 100vh;
+}
+* {
+  color: white;
+}
+.navbar * {
+  color: #666;
 }
 h1, 
 h2, 
@@ -17,6 +25,10 @@ h2,
 .jumbotron {
   background: transparent;
   color: white;
+  padding-top: 20vh;
+}
+.btn.btn-primary {
+
 }
 .modal {
   position: absolute;
@@ -28,9 +40,6 @@ h2,
 }
 .add-body {
   margin-top: 10vh;
-}
-.container {
-  background-color: rgba(255, 255, 255, 0.8);
 }
 table {
   margin-top: 20px;

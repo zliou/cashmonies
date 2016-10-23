@@ -18,13 +18,19 @@
     </thead>
     <tbody>
       {% for item in items %}
-      <tr>
-        <td>{{ item.name }}</td>
-        <td>{{ item.owner }}</td>
-        <td>{{ item.price }}</td>
-        <td>{{ item.name }}</td>
-        <td><a class="btn btn-primary" href="/buy/{{item.id}}/{{current_user.id}}">Buy</a></td>
-      </tr>
+        {% if current_user.id != item.owner %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{% for user in all_users %}
+            {% if user.id == item.owner %}
+            {{ user.name }}
+            {% endif %}
+            {% endfor %}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.name }}</td>
+          <td><a class="btn btn-primary" href="/buy/{{item.id}}/{{current_user.id}}">Buy</a></td>
+        </tr>
+        {% endif %}
       {% endfor %}
     </tbody>
   </table>
