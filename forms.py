@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import StringField, BooleanField, PasswordField, validators
+from wtforms import StringField, BooleanField, PasswordField, IntegerField, validators
 from wtforms.validators import DataRequired
 
 class RegisterForm(Form):
@@ -10,3 +10,7 @@ class RegisterForm(Form):
 class LoginForm(Form):
   email = StringField('email', validators=[DataRequired()])
   password = PasswordField('password', validators=[DataRequired()])
+
+class AddItemForm(Form):
+  name = StringField('name', validators=[DataRequired()])
+  price = IntegerField('price', validators=[DataRequired()])

@@ -139,6 +139,29 @@ def buy(itemid, buyerid):
 	db.session.commit()
 	return render_template('home.html')
 
+@app.route('/add', methods=["GET", "POST"])
+@login_required
+def addForm():
+	form = AddItemForm()
+	if request.method == 'POST':
+		if form.validate_on_submit:
+			return redirect('/add/' + form.name.data + '/' + str(form.price.data))
+		else:
+			flash('All fields are required')
+			return redirect('/add')
+	return render_template('add.html',
+		form=form)
+
+@app.route('/add/<name>/<price>')
+@login_required
+def add(name, price):
+	newItem = Item(name, price=price)
+	current_user.items.append(newItem)
+	db.session.add(current_user)
+	db.session.commit()
+	flash('Item ' + name + ' succesfully added')
+	return render_template('home.html')
+
 @app.route("/logout")
 def logout():
   logout_user()
