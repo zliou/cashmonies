@@ -2,10 +2,22 @@
   font-family: "Gotham Rounded";
   src: url(../fonts/GothamRounded.ttf);
 }
-html, body {
+html, 
+body {
   font-family: "Gotham Rounded", sans-serif;
 }
-h1, h2 {
+h1, 
+h2, 
+.navbar-brand, 
+.brand {
   font-family: "Montserrat";
   font-weight: 700;
+}
+.modal {
+  position: absolute;
+  top: 20%;
+  margin: auto;
+}
+.flashed_messages {
+  color: red;
 }

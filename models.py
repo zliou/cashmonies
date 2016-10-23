@@ -13,9 +13,9 @@ class User(db.Model):
 
   """The database for current users"""
   id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(30), unique=True)
+  name = db.Column(db.String(30))
   password = db.Column(db.String(80))
-  email = db.Column(db.String(80)) 
+  email = db.Column(db.String(80), unique=True) 
 
   def __init__(self, name, password, email):
 

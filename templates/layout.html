@@ -4,9 +4,10 @@
   <title>Quarry | {{ title }}</title>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css"> -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../static/css/stylesheet.css">
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="icon" type="image/png" href="/static/images/favicon.png">
 
@@ -14,158 +15,165 @@
 </head>
 
 <body>
-  <div class="wrapper">
-    <div class="nav">
-      <div class="nav-inner">
-      <div class="nav-left">
-          <a href="/"><h1>Quarry</h1></a>
+  <div class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Quarry</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+
+          <!-- Logged in block -->
+          {% if current_user.is_authenticated %}
+          <li><a href="/pay">Make Payment</a></li>
+          <!-- <a href="/charge"><li>Charge</li></a> -->
+          <li><a href="/logout" id="logout">Logout</a></li>
+
+          <!-- Logged out block -->
+          {% else %}
+          <li><a href="javascript:signin();">Login</a></li>
+          <li><a href="javascript:register();" id="register">Register</a></li>
+          {% endif %}
+          <li>
+            <ul class="dropdown-menu">
+              <!-- Logged in block -->
+              {% if current_user.is_authenticated %}
+              <a href="/pay"><li>Make Payment</li></a>
+              <!-- <a href="/charge"><li>Charge</li></a> -->
+              <a href="/logout" id="logout"><li>Logout</li></a>
+              <!-- Logged out block -->
+              {% else %}
+              <a href="javascript:signin();"><li>Login</li></a>
+              <a href="javascript:register();" id="register"><li>Register</li></a>
+              {% endif %}
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <div class="container">
+    <div class="flashed_messages">
+      {% for message in messages %}
+      <p>{{ message }} </p>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+  {% endwith %}
+
+  {% if not current_user.is_authenticated %}
+  <div class="modal modal-lg fade" id="modal-login">
+    <!-- Login popup form (hidden by default) -->
+    <div class="modal-content">
+
+      <form method=post>
+
+        <!-- Hidden tag is needed for wtforms validation! -->
+        {{ login_form.hidden_tag() }}
+        <div class="modal-header">
+          <h2>Sign in to Quarry</h2>
         </div>
-        <div class="nav-right">
-          <ul class="ul-nav">
+        <div class="modal-body">
+          <div class="form-group">
+          {{ login_form.email(class_="form-control", placeholder="email") }}
+          </div>
 
-            <!-- Logged in block -->
-            {% if current_user.is_authenticated %}
-            <a href="/pay"><li>Make Payment</li></a>
-            <!-- <a href="/charge"><li>Charge</li></a> -->
-            <a href="/logout" id="logout"><li>Logout</li></a>
+          {% for error in login_form.email.errors %}
+          <span style="color:red;">[{{ error }}]</span>
+          {% endfor %}
 
-            <!-- Logged out block -->
-            {% else %}
-            <a href="javascript:signin();"><li>Login</li></a>
-            <a href="javascript:register();" id="register"><li>Register</li></a>
-            {% endif %}
+          <div class="form-group">
+          {{ login_form.password(class_="form-control", placeholder="password") }}
+          </div>
 
-          </ul>
+          {% for error in login_form.password.errors %}
+          <span style="color:red;">[{{ error }}]</span>
+          {% endfor %} 
         </div>
-      </div>
-
+        <div class="modal-footer">
+          <input type="submit" class="submit btn btn-primary" name="submit" value="Login">
+          <button class="btn btn-default close-modal">Cancel</button>
+        </div>
+      </form>
     </div>
+  </div>
 
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <div class="banner">
-      <div class="flashed_messages">
-        {% for message in messages %}
-        <p>{{ message }} </p>
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
-    {% endwith %}
 
-    {% if not current_user.is_authenticated %}
-    <div class="popup_wrapper">
+  <div class="modal modal-lg fade" id="modal-register">
+    <!-- Registration popup form (hidden by default) -->
+    <div class="modal-content">
 
-      <!-- Login popup box (hidden by default) -->
-      <div class="popup_signin"style="">
+      <form method=post>
 
-        <form method=post>
+        <!-- Hidden tag is needed for wtforms validation! -->
+        {{ form.hidden_tag() }}
+        <div class="modal-header">
+          <h2>Join Quarry</h2>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+          <!-- Registration Field -->
 
-          <!-- Hidden tag is needed for wtforms validation! -->
-          {{ login_form.hidden_tag() }}
-
-          <a style="font-size:48px;position:fixed;float:right;margin-right:0px;margin-left:550px;color:#666;" onClick="javascript:hide_signin();" href="">x</a>
-          <div class="popup_inner">
-            <h2>Sign in to Quarry</h2>
-            {{ login_form.email(size=32, placeholder="email") }}
-
-            {% for error in login_form.email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-
-            {{ login_form.password(size=32, placeholder="password") }}
-
-            {% for error in login_form.password.errors %}
-            <span style="color:red;">[{{ error }}]</span>
-            {% endfor %} 
-            <input type="submit" class="submit" name="submit" value="Sign In">
+          {{ form.name(class_="form-control", placeholder="name") }}
           </div>
-        </form>
-      </div>
-    </div>
 
-    <div class="popup_wrapper">
-      <!-- Registration popup form (hidden by default) -->
-      <div class="popup_register">
+          {% for error in form.name.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
 
-        <form method=post>
-
-          <!-- Hidden tag is needed for wtforms validation! -->
-          {{ form.hidden_tag() }}
-
-          <a style="font-size:48px;position:fixed;float:right;margin-right:0px;margin-left:550px;color:#666;" onClick="javascript:hide_register();" href="">x</a>
-          <div class="popup_inner">
-            <h2>Join Quarry</h2>
-
-            <!-- Registration Field -->
-            {{ form.name(size=32, placeholder="name") }}
-
-            {% for error in form.name.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-
-            {{ form.email(size=32, placeholder="email") }}
-
-            {% for error in form.email.errors %}
-            <span style="color:red;">[{{ error }}]</span>
-            {% endfor %}
-
-            {{ form.password(size=32, placeholder="password") }}
-
-            {% for error in form.password.errors %}
-            <span style="color:red;">[{{ error }}]</span>
-            {% endfor %} 
-            <input type="submit" class="submit" name="submit" value="Join">
+          <div class="form-group">
+          {{ form.email(class_="form-control", placeholder="email") }}
           </div>
-        </form>
-      </div>
+
+          {% for error in form.email.errors %}
+          <span style="color:red;">[{{ error }}]</span>
+          {% endfor %}
+
+          <div class="form-group">
+          {{ form.password(class_="form-control", placeholder="password") }}
+          </div>
+
+          {% for error in form.password.errors %}
+          <span style="color:red;">[{{ error }}]</span>
+          {% endfor %} 
+        </div>
+        <div class="modal-footer">
+          <input type="submit" class="submit btn btn-primary" name="submit" value="Join">
+          <button class="btn btn-default close-modal">Cancel</button>
+        </div>
+      </form>
     </div>
-    {% endif %}
-    <script type="text/javascript">
-  // hide the navigation and signin boxes
-  $( '.popup_signin' ).hide();
-  $( '.popup_register' ).hide();
-  signing_in = false;
-  registering = false;
-  function signin() {
-    if ( signing_in == true ) {
-      $( '.popup_signin' ).slideUp();
-      signing_in = false;
-      return;
-    }
-    $( '.popup_register' ).slideUp();
-    $( '.popup_signin' ).slideDown();
-    signing_in = true;
-  }
-  // hides the sign in box
-  function hide_signin() { 
-    $( '.popup_signin' ).slideUp();
-  }
-  // user clicks register; shows the registration box
-  function register() {
-    if ( registering == true ) {
-      $( '.popup_register' ).slideUp();
-      registering = false;
-      return;
-    }
-    $( '.popup_signin' ).slideUp();
-    $( '.popup_register' ).slideDown();
-    registering = true;
-  }
-  // hides the registration box
-  function hide_register() {
-    $( '.popup_register' ).slideUp();
-  }
-  $(document).keyup(function(e) {
-    if (e.keyCode == 27) {
-      hide_signin();  // hide all the stuff
-      hide_register();
-    }   
+  </div>
+  {% endif %}
+</div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".close-modal").click(function(e) {
+      e.preventDefault();
+      $(".modal").modal("hide");
+      return false;
+    });
+    $(".modal").modal("hide");
   });
+  function signin() {
+    $("#modal-login").modal("show");
+  }
+  function register() {
+    $("#modal-register").modal("show");
+  }
 </script>
 {% block content %}{% endblock %}
 </div>
-
 </body>
 
 </html>
