@@ -17,4 +17,4 @@ var/
 venv/
 utput/
 *.pyc
-
+*.sw*
