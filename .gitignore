@@ -1,3 +1,6 @@
+.gitignore
+.DS_Store
+samplecode-PYTHON-7e32ec/
 __pycache__/
 Output/
 Oche__/
