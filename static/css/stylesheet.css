@@ -19,13 +19,18 @@ h1,
 h2, 
 .navbar-brand, 
 .brand {
+  color: white;
   font-family: "Montserrat";
   font-weight: 700;
+}
+h4 {
+  color: white;
 }
 .jumbotron {
   background: transparent;
   color: white;
   padding-top: 20vh;
+  border: none;
 }
 .btn.btn-primary {
 
@@ -43,4 +48,7 @@ h2,
 }
 table {
   margin-top: 20px;
+}
+tr {
+  border-top: 1px solid white;
 }
