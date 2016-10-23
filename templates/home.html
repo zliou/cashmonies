@@ -1,7 +1,31 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
-<h1>Home</h1>
-
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Home</h1>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <table class="table">
+    <thead>
+      <th>Name of item</th>
+      <th>Owner</th>
+      <th>Price</th>
+      <th></th>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ item.owner }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.name }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 {% endblock %}

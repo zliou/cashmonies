@@ -113,8 +113,10 @@ def index():
 @app.route('/home', methods=["GET", "POST"])
 @login_required
 def home():
+	items = db.session.query(Item).filter_by(listed=True).all()
 	return render_template( 'home.html',
-							title="Home")
+							items=items,
+							title="Listings")
 
 @app.route("/logout")
 def logout():
