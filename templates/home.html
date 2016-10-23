@@ -9,11 +9,15 @@
   </div>
 </div>
 <div class="container">
+  <h4>Browse by location</h4>
+  <a class="btn btn-default" href="/home/Vegas">Vegas</a>
+  <a class="btn btn-default" href="/home/SanDiego">SanDiego</a>
   <table class="table">
     <thead>
       <th>Name of item</th>
       <th>Owner</th>
       <th>Price</th>
+      <th>Location</th>
       <th></th>
     </thead>
     <tbody>
@@ -28,6 +32,7 @@
             {% endfor %}</td>
           <td>{{ item.price }}</td>
           <td>{{ item.name }}</td>
+          <td>{{ item.location }}</td>
           <td><a class="btn btn-primary" href="/buy/{{item.id}}/{{current_user.id}}">Buy</a></td>
         </tr>
         {% endif %}

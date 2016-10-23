@@ -14,6 +14,7 @@ class LoginForm(Form):
 class AddItemForm(Form):
   name = StringField('name', validators=[DataRequired()])
   price = IntegerField('price', validators=[DataRequired()])
+  location = StringField('location')
 
 class ProfileForm(Form):
   name = StringField('name', validators=[DataRequired()])

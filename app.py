@@ -112,9 +112,10 @@ def index():
 							current_user=current_user)
 
 @app.route('/home', methods=["GET", "POST"])
+@app.route('/home/<location>')
 @login_required
-def home():
-	items = db.session.query(Item).filter_by(listed=True).all()
+def home(location="Vegas"):
+	items = db.session.query(Item).filter_by(location=location.lower()).all()
 	all_users = db.session.query(User).all()
 	return render_template( 'home.html',
 							items=items,
@@ -149,14 +150,14 @@ def addForm():
 	form = AddItemForm()
 	if request.method == 'POST':
 		if form.validate_on_submit:
-			return redirect('/add/' + form.name.data + '/' + str(form.price.data))
+			return redirect('/add/' + form.name.data + '/' + str(form.price.data)) + '/' + str(form.location.data)
 		else:
 			flash('All fields are required')
 			return redirect('/add')
 	return render_template('add.html',
 		form=form)
 
-@app.route('/add/<name>/<price>')
+@app.route('/add/<name>/<price>/<location>')
 @login_required
 def add(name, price):
 	newItem = Item(name, price=price)

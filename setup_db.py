@@ -10,10 +10,10 @@ user2.accountNumber = "4957030420210454"
 db.session.add(user1)
 db.session.add(user2)
 
-user1.items.append(Item('Starbucks Gift Card', price=40))
-user1.items.append(Item('Costco Gift Card', price=20))
+user1.items.append(Item('Starbucks Gift Card', location="Vegas", price=40))
+user1.items.append(Item('Costco Gift Card', location="Vegas", price=20))
 
-user2.items.append(Item('Target Gift Card', price=25))
+user2.items.append(Item('Target Gift Card', location="SanDiego", price=25))
 
 db.session.commit()
 
