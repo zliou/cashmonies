@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-md-push-2 add-body">
+      <h2>Add a new item</h2>
+      <form method=post>
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.name(class_="form-control", placeholder="name")}}
+        </div>
+        {% for error in form.name.errors %}
+        <span style="color:red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <div class="form-group">
+          {{ form.price(class_="form-control", placeholder="price") }}
+        </div>
+
+        {% for error in form.price.errors %}
+        <span style="color:red;">[{{ error }}]</span>
+        {% endfor %} 
+
+        <input type="submit" class="submit btn btn-primary" name="submit" value="Add">
+      </div>
+    </form>
+    </div>
+</div>
+</div>
+
+{% endblock %}

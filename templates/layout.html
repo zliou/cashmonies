@@ -10,8 +10,6 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="icon" type="image/png" href="/static/images/favicon.png">
-
-
 </head>
 
 <body>
@@ -31,8 +29,9 @@
 
           <!-- Logged in block -->
           {% if current_user.is_authenticated %}
-          <li><a href="/pay">Make Payment</a></li>
+          <li><a href="/home">Buy</a></li>
           <!-- <a href="/charge"><li>Charge</li></a> -->
+          <li><a href="/add">Add Listing</a></li>
           <li><a href="/logout" id="logout">Logout</a></li>
 
           <!-- Logged out block -->
