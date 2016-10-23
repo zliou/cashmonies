@@ -19,12 +19,19 @@ h1,
 h2, 
 .navbar-brand, 
 .brand {
-  color: white;
+  color: white !important;
   font-family: "Montserrat";
   font-weight: 700;
 }
+.navbar-brand {
+  color: #666 !important;
+}
+
 h4 {
   color: white;
+}
+.modal h2 {
+  color: #666 !important;
 }
 .jumbotron {
   background: transparent;
