@@ -131,7 +131,7 @@ def buy(itemid, buyerid):
 	seller = db.session.query(User).filter_by(id=item.owner).first()
 	# Transfer item from seller to buyer
 
-	buyer.items.append(Item(item.name, item.price))
+	buyer.items.append(Item(item.name, item.price, item.location))
 	db.session.delete(item)
 
 	# Pay the seller
@@ -142,7 +142,7 @@ def buy(itemid, buyerid):
 		flash("Item succesfully purchased")
   
 	db.session.commit()
-	return redirect("/home")
+	return redirect("/home/" + item.location)
 
 @app.route('/add', methods=["GET", "POST"])
 @login_required
