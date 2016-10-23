@@ -18,7 +18,6 @@
         <th>Name of item</th>
         <th>Owner</th>
         <th>Price</th>
-        <th>Name</th>
         <th>Location</th>
         <th></th>
       </tr>
@@ -34,7 +33,6 @@
             {% endif %}
             {% endfor %}</td>
           <td>{{ item.price }}</td>
-          <td>{{ item.name }}</td>
           <td>{{ item.location }}</td>
           <td><a class="btn btn-primary" href="/buy/{{item.id}}/{{current_user.id}}">Buy</a></td>
         </tr>

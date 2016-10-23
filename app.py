@@ -137,8 +137,9 @@ def buy(itemid, buyerid):
 	# Pay the seller
 	res = transfer(buyer.name, buyer.accountNumber, 
 					 seller.name, seller.accountNumber, item.price)
-	if res == "200" or res == 200:
-		print "Succesfully transfered money"
+	if res.status_code == "200" or res.status_code == 200:
+		print "Succesfully transfered money; full response json:"
+		print res.json()
 		flash("Item succesfully purchased")
   
 	db.session.commit()

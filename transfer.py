@@ -35,4 +35,4 @@ def transfer(senderName, senderAccountNumber, recipientName, recipientPrimaryAcc
     base_uri = 'visadirect/'
     resource_path = 'fundstransfer/v1/pushfundstransactions'
     response = visa_api_client.do_mutual_auth_request(base_uri + resource_path, push_funds_request, 'Push Funds Transaction Test','post')
-    return response.status_code
+    return response
