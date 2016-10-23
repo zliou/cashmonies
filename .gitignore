@@ -18,3 +18,4 @@ venv/
 utput/
 *.pyc
 *.sw*
+.DS_Store
