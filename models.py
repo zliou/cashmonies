@@ -1,8 +1,12 @@
 import requests
-from app import db
 
 import time
 import json
+
+from flask_sqlalchemy import SQLAlchemy
+from app import app
+
+db = SQLAlchemy(app)
 
 class User(db.Model):
 
