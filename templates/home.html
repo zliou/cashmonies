@@ -23,6 +23,7 @@
         <td>{{ item.owner }}</td>
         <td>{{ item.price }}</td>
         <td>{{ item.name }}</td>
+        <td><a class="btn btn-primary" href="/buy/{{item.id}}/{{current_user.id}}">Buy</a></td>
       </tr>
       {% endfor %}
     </tbody>

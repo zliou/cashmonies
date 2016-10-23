@@ -48,7 +48,7 @@ class Item(db.Model):
   owner = db.Column(db.Integer, db.ForeignKey('users.id'))
   user = db.relationship("User", back_populates="items")
   listed = db.Column(db.Boolean)
-  price = db.Column(db.Integer)
+  price = db.Column(db.Integer) 
 
   def __init__(self, name, price):
     print "Generating Item"
