@@ -15,9 +15,8 @@ ipaddress==1.0.17
 itsdangerous==0.23
 Jinja2==2.7.2
 MarkupSafe==0.18
-mastercard-api-core==1.1.1
-mastercard-p2p==1.0.1
 paramiko==1.12.2
+psycopg2==2.6
 pyasn1==0.1.9
 pycparser==2.16
 pycrypto==2.6.1
