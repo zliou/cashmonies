@@ -49,12 +49,14 @@ class Item(db.Model):
   user = db.relationship("User", back_populates="items")
   listed = db.Column(db.Boolean)
   price = db.Column(db.Integer) 
+  location = db.Column(db.String(80))
 
-  def __init__(self, name, price):
+  def __init__(self, name, price, location="Las Vegas"):
     print "Generating Item"
     self.name = name
     self.price = price
     self.listed = True
+    self.location = location.lower()
 
 # Item mapping
 User.items = db.relationship("Item", back_populates="user")
