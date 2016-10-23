@@ -1,0 +1,11 @@
+@font-face {
+  font-family: "Gotham Rounded";
+  src: url(../fonts/GothamRounded.ttf);
+}
+html, body {
+  font-family: "Gotham Rounded", sans-serif;
+}
+h1, h2 {
+  font-family: "Montserrat";
+  font-weight: 700;
+}
