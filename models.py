@@ -9,6 +9,7 @@ from app import app
 db = SQLAlchemy(app)
 
 class User(db.Model):
+  __tablename__ = 'users'
 
   """The database for current users"""
   id = db.Column(db.Integer, primary_key=True)
@@ -18,7 +19,7 @@ class User(db.Model):
 
   def __init__(self, name, password, email):
 
-    print( "Generating user" )
+    print "Generating user"
     self.email = email
     self.name = name
     self.password = password
@@ -37,4 +38,21 @@ class User(db.Model):
 
   def __repr__(self):
     return '<User %r>' % self.email
+
+class Item(db.Model):
+  __tablename__ = 'items'
+
+  id = db.Column(db.Integer, primary_key=True)
+  owner = db.Column(db.Integer, db.ForeignKey('users.id'))
+  user = db.relationship("User", back_populates="items")
+
+  def __init__(self, data):
+    print "Generating Item"
+    self.data = data
+
+# Item mapping
+User.items = db.relationship("Item", back_populates="user")
+
+
+
 
