@@ -40,6 +40,7 @@ def load_user(userid):
 
 from models import *
 from forms import *
+from transfer import transfer
 
 @app.route('/index', methods=["GET", "POST"])
 @app.route('/', methods=["GET", "POST"])
@@ -113,18 +114,40 @@ def index():
 @app.route('/home', methods=["GET", "POST"])
 @login_required
 def home():
+	items = db.session.query(Item).filter_by(listed=True).all()
 	return render_template( 'home.html',
-							title="Home")
+							items=items,
+							title="Listings")
+
+@app.route('/buy/<itemid>/<buyerid>')
+@login_required
+def buy(itemid, buyerid):
+	item = db.session.query(Item).filter_by(id=itemid).first()
+	buyer = db.session.query(User).filter_by(id=buyerid).first()
+	seller = db.session.query(User).filter_by(id=item.owner).first()
+	# Transfer item from seller to buyer
+
+	buyer.items.append(Item(item.name, item.price))
+	db.session.delete(item)
+
+	# Pay the seller
+	res = transfer(buyer.name, buyer.accountNumber, 
+					 seller.name, seller.accountNumber, item.price)
+	if res == "200" or res == 200:
+		print "Succesfully transfered money"
+  
+	db.session.commit()
+	return render_template('home.html')
 
 @app.route("/logout")
 def logout():
-    logout_user()
-    flash("You are now logged out.")
-    return redirect('/')
-    
+  logout_user()
+  flash("You are now logged out.")
+  return redirect('/')
+  
 # deals with unauthorized page access
 @login_manager.unauthorized_handler
 def unauthorized():
-    # do stuff
-    flash("You'll need to log in or sign up to access that page")
-    return redirect('/')
+  # do stuff
+  flash("You'll need to log in or sign up to access that page")
+  return redirect('/')

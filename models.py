@@ -13,9 +13,10 @@ class User(db.Model):
 
   """The database for current users"""
   id = db.Column(db.Integer, primary_key=True)
-  name = db.Column(db.String(30), unique=True)
+  name = db.Column(db.String(30))
   password = db.Column(db.String(80))
   email = db.Column(db.String(80)) 
+  accountNumber = db.Column(db.String(80))
 
   def __init__(self, name, password, email):
 
@@ -43,12 +44,17 @@ class Item(db.Model):
   __tablename__ = 'items'
 
   id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String(80))
   owner = db.Column(db.Integer, db.ForeignKey('users.id'))
   user = db.relationship("User", back_populates="items")
+  listed = db.Column(db.Boolean)
+  price = db.Column(db.Integer) 
 
-  def __init__(self, data):
+  def __init__(self, name, price):
     print "Generating Item"
-    self.data = data
+    self.name = name
+    self.price = price
+    self.listed = True
 
 # Item mapping
 User.items = db.relationship("Item", back_populates="user")
